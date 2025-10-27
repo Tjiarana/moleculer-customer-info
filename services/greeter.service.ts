@@ -56,6 +56,19 @@ const GreeterService: ServiceSchema<GreeterSettings> = {
 				return `Welcome, ${ctx.params.name}`;
 			},
 		},
+
+		getCustomer: {
+			rest: {
+				method: "GET",
+				path: "/getCustomer",
+			},
+			params: {
+				custCode: { type: "string", empty: true }
+			},
+			async handler(ctx: any) {
+				return await this.broker.call("customerinfo.getUser", { custCode: ctx.params.custCode });
+			}
+		}
 	},
 
 	/**

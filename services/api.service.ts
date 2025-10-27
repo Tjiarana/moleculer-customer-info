@@ -1,5 +1,5 @@
 import type { Context, ServiceSchema } from "moleculer";
-import type { ApiSettingsSchema, GatewayResponse, IncomingRequest, Route } from "moleculer-web";
+import type { ApiSettingsSchema, IncomingRequest, Route } from "moleculer-web";
 import ApiGateway from "moleculer-web";
 
 interface Meta {
@@ -42,9 +42,15 @@ const ApiService: ServiceSchema<ApiSettingsSchema> = {
 
 				// The auto-alias feature allows you to declare your route alias directly in your services.
 				// The gateway will dynamically build the full routes from service schema.
-				autoAliases: true,
+				autoAliases: false, // Disable automatic generation of REST aliases for all actions
 
-				aliases: {},
+				// Explicit aliases: list only the endpoints you want exposed through the API gateway.
+				// This prevents other services (e.g. customerinfo) from being exposed automatically.
+				aliases: {
+					"GET /greeter/hello": "greeter.hello",
+					"GET /greeter/welcome/:name": "greeter.welcome",
+					"GET /greeter/getCustomer": "greeter.getCustomer",
+				},
 
 				/**
 				 * Before call hook. You can check the request.

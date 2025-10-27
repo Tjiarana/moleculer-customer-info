@@ -1,25 +1,34 @@
-import type { Context, ServiceSchema, ServiceSettingSchema } from "moleculer";
+import { ServiceSchema } from "moleculer";
+import DbService from "moleculer-db";
+import { Sequelize } from "sequelize";
 
-interface GetCustomerQuery {
-	custCode: string;
-	year: number;
-}
+const sequelize = new Sequelize("mydb", "root", "mysql", {
+	host: "localhost",
+	dialect: "mysql",
+	logging: false,
+});
 
-const CustomerService: ServiceSchema<ServiceSettingSchema> = {
-	name: "customer",
+const CustomerService: ServiceSchema = {
+	name: "customerinfo",
+	mixins: [DbService],
 	actions: {
-		getCustomer: {
-			rest: {
-				method: "GET",
-				path: "/getCustomer",
-			},
+		getUser: {
 			params: {
-				custCode: "string",
-				year: { type: "number", convert: true },
+				custCode: { type: "string", empty: true },
 			},
-			async handler(ctx: Context<GetCustomerQuery>): Promise<Object> {
-				const data = await ctx.call<Object[]>('mysql.getCustomer', { custCode: ctx.params.custCode });
-				return { customerCode: ctx.params.custCode, year: ctx.params.year, data: data };
+			async handler(ctx: any) {
+				const tableName = this.name;
+				let sql = `SELECT * FROM ${tableName}`;
+				if (ctx.params.custCode != "") sql += ` WHERE`;
+				if (ctx.params.custCode != "")
+					sql += ` customerCode like '%${ctx.params.custCode}%'`;
+				try {
+					const [rows] = await sequelize.query(sql);
+					return rows;
+				} catch (err) {
+					this.logger?.error("getUser error:", err);
+					throw err;
+				}
 			},
 		},
 	},
