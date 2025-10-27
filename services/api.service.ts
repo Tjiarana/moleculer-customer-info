@@ -13,6 +13,12 @@ const ApiService: ServiceSchema<ApiSettingsSchema> = {
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
 	settings: {
+		cors: {
+			origin: "*",
+			methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+			allowedHeaders: "*",
+		},
+
 		// Exposed port
 		port: process.env.PORT != null ? Number(process.env.PORT) : 3030,
 
@@ -47,9 +53,7 @@ const ApiService: ServiceSchema<ApiSettingsSchema> = {
 				// Explicit aliases: list only the endpoints you want exposed through the API gateway.
 				// This prevents other services (e.g. customerinfo) from being exposed automatically.
 				aliases: {
-					"GET /greeter/hello": "greeter.hello",
-					"GET /greeter/welcome/:name": "greeter.welcome",
-					"GET /greeter/getCustomer": "greeter.getCustomer",
+					"GET /customer/getCustomer": "customer.getCustomer",
 				},
 
 				/**
