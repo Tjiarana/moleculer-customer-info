@@ -1,0 +1,10 @@
+{
+    "MYSQL" : { "alias": "mysql", "dialect": "mysql", "url": "mysql://user:password@localhost:3306/testdb?charset=utf8&connectionLimit=10", "user": "user", "password": "password" },
+    "ODBC" : { "alias": "odbc", "dialect": "mysql", "url": "DRIVER={MySQL ODBC 5.3 Unicode Driver};SERVER=localhost;DATABASE=testdb;HOST=localhost;PORT=3306;UID=user;PWD=password;", "user": "user", "password": "password" },
+    "MSSQL": { "alias": "mssql", "dialect": "mssql", "url": "Server=localhost,1433;Database=testdb;User Id=user;Password=password;Encrypt=false;Trusted_Connection=Yes;", "user": "user", "password": "password" },
+    "ORACLE": { "alias": "oracle", "dialect": "oracle", "url": "localhost:1521/ORCLCDB.localdomain", "user": "user", "password": "password" },
+    "POSTGRES": { "alias": "postgres", "dialect": "postgres", "url": "postgresql://user:password@localhost:5432/testdb", "user": "user", "password": "password" },
+    "INFORMIX": { "alias": "odbc", "dialect": "informix", "url": "DRIVER={IBM INFORMIX ODBC DRIVER (64-bit)};SERVER=online_localhost;DATABASE=refdb;HOST=localhost;SERVICE=9088;UID=user;PWD=password;CLIENT_LOCALE=th_th.thai620;DB_LOCALE=th_th.thai620;", "user": "user", "password":"password" },
+    "SQLITE" : { "alias": "sqlite", "dialect": "sqlite", "url": ":memory:", "user": "", "password": "" },
+    "MYSQL2" : { "alias": "mysql2", "dialect": "mysql", "url": "", "user": "user", "password": "password", "host": "localhost", "port": 3306, "database": "testdb", "options": { "charset": "utf8", "connectionLimit": 10 } }
+}
